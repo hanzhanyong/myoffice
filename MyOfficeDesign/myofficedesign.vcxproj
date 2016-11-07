@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Analyse\moAnalyse.cpp" />
+    <ClCompile Include="Common\moMath.cpp" />
+    <ClCompile Include="Common\moMatrixd.cpp" />
+    <ClCompile Include="Common\moMatrixf.cpp" />
+    <ClCompile Include="Common\moQuat.cpp" />
+    <ClCompile Include="Common\moTimer.cpp" />
+    <ClCompile Include="DB\moPolygon.cpp" />
+    <ClCompile Include="DB\moPolygon.h" />
+    <ClCompile Include="DB\moRectRoom.h" />
+    <ClCompile Include="DB\moAlignShape.h" />
+    <ClCompile Include="DB\moDataSource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3rdParty\nlohmann\json.hpp" />
+    <ClInclude Include="Analyse\moAnalyse.h" />
+    <ClInclude Include="Common\moArray.h" />
+    <ClInclude Include="Common\moExport.h" />
+    <ClInclude Include="Common\moGL.h" />
+    <ClInclude Include="Common\moGLDefine.h" />
+    <ClInclude Include="Common\moMath.h" />
+    <ClInclude Include="Common\moMatrix.h" />
+    <ClInclude Include="Common\moMatrixd.h" />
+    <ClInclude Include="Common\moMatrixf.h" />
+    <ClInclude Include="Common\moQuat.h" />
+    <ClInclude Include="Common\moTimer.h" />
+    <ClInclude Include="Common\moVec.h" />
+    <ClInclude Include="DB\moDoor.h" />
+    <ClInclude Include="DB\moLine.h" />
+    <ClInclude Include="DB\moRoom.h" />
+    <ClInclude Include="DB\moShape.h" />
+    <ClInclude Include="DB\moDataSource.h" />
+    <ClInclude Include="DB\moVertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="myofficedesign.def" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ADA38C23-D985-4E83-BD33-A46AE0BE53BD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>IndoorMapEngine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\ext\libiconv\include;..\ext\png;..\ext\zlib;..\ext\freetype-2.5.3\include;..\ext\gpc;..\ext\glew-1.12.0\include;..\ext\pthread\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\ext\glew-1.12.0\lib;..\ext\pthread\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;FT_DEBUG_LEVEL_ERROR;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\zlib.lib;$(SolutionDir)$(Configuration)\png.lib;$(SolutionDir)$(Configuration)\libiconv.lib;$(SolutionDir)$(Configuration)\freetype.lib;$(SolutionDir)$(Configuration)\pthreadVC2.lib;Release\Win32\glew32.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>IndoorMapEngine.def</ModuleDefinitionFile>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;INDOORMAPENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>IndoorMapEngine.def</ModuleDefinitionFile>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\zlib.lib;$(SolutionDir)$(Configuration)\png.lib;$(SolutionDir)$(Configuration)\libiconv.lib;$(SolutionDir)$(Configuration)\pthreadVC2.lib;$(SolutionDir)$(Configuration)\freetype.lib;opengl32.lib;Release\Win32\glew32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

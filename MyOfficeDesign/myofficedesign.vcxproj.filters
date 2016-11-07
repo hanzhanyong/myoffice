@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Common\moMath.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moAlignShape.h">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moPolygon.h">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moRectRoom.h">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moPolygon.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moDataSource.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\moMatrixd.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\moMatrixf.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\moQuat.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\moTimer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\moExport.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moMath.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moDoor.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moLine.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moRoom.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moShape.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moVertex.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moDataSource.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParty\nlohmann\json.hpp">
+      <Filter>3rdParty\nlohmann</Filter>
+    </ClInclude>
+    <ClInclude Include="Analyse\moAnalyse.h">
+      <Filter>Analyse</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moArray.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moGL.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moMatrix.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moMatrixd.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moMatrixf.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moQuat.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moGLDefine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\moVec.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DB">
+      <UniqueIdentifier>{fd00d0b7-3aed-455d-96f6-05fdac491d2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{e8e4b443-a206-41d8-bc05-dca5be86566b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty">
+      <UniqueIdentifier>{d96e5ae8-0c8b-4b48-a68b-897dfc900dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty\nlohmann">
+      <UniqueIdentifier>{090a7179-f6df-46d4-96d0-a20fcae57a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Analyse">
+      <UniqueIdentifier>{22c0b7b4-345e-445a-bbf8-393752ada126}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="myofficedesign.def" />
+  </ItemGroup>
+</Project>
