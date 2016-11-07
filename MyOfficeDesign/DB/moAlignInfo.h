@@ -22,32 +22,30 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTI
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-#ifndef MYOFFICEDESIGN_RECT_H_
-#define MYOFFICEDESIGN_RECT_H_
+#ifndef MYOFFICEDESIGN_ALIGNSHAPE_H_
+#define MYOFFICEDESIGN_ALIGNSHAPE_H_
 
-#include "moRoom.h"
+#include "moShape.h"
+#include "moVertex.h"
+
 namespace MyOffice {
 	namespace DB {
 
-		class MO_EXPORT_DLL MoRectRoom : public MoRoom
+		class MO_EXPORT_DLL MoAlignInfo:public MoElement
 		{
 		public://构造函数
-			MoRectRoom() : MoRoom()
-			{
-				//不一定是4个顶点，可能5个，三个点在一条直线上
-			}
-			~MoRectRoom()
-			{
-				MoRoom::~MoRoom();
-			}
+			MoAlignInfo(const nlohmann::json &_json = nullptr);
+			virtual MoElementType	getShapeType() { return MET_ALIGNINFO; }
 
-		public://属性
-			virtual MoShapeType	getShapeType() { return MST_RECT; }
+			float					getX();
+			void					setX(float v);
+			float					getY();
+			void					setY(float v);
+			float					getZ();
+			void					setZ(float v);
 
-			//MoLine				*left() { return m_LineArray[0]; }
-			//MoLine				*right() { return  m_LineArray[2]; }
-			//MoLine				*top() { return  m_LineArray[1]; }
-			//MoLine				*bottom() { return  m_LineArray[3]; }
+			
+			virtual		nlohmann::json	&toJson();
 		};
 	}
 }

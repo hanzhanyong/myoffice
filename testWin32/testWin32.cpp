@@ -1,4 +1,4 @@
-// testWin32.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌÐòµÄÈë¿Úµã¡£
+ï»¿// testWin32.cpp : å®šä¹‰æŽ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -8,9 +8,27 @@
 int main()
 {
 	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
-	datasource->read("");
+	datasource->open("D:\\jsonDemo1.json");
 
-	MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
+	MyOffice::DB::MoRoom *roomSource = datasource->getRoom(0);
+
+	MyOffice::DB::MoRoom *room = dynamic_cast<MyOffice::DB::MoRoom *>( roomSource->clone());
+	
+	MyOffice::DB::MoVertex *vertex = datasource->createVertex(5000, 200);
+	room->addVertex(vertex);
+	vertex = datasource->createVertex(-5000, 200);
+	room->addVertex(vertex);
+	vertex = datasource->createVertex(-5000, 7000);
+	room->addVertex(vertex);
+	vertex = datasource->createVertex(5000, 7000);
+	room->addVertex(vertex);
+	datasource->add(room);
+
+	datasource->save("D:\\jsonDemoResult.json");
+
+
+
+	///MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
 
 
 

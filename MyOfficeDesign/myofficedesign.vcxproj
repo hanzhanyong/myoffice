@@ -17,11 +17,15 @@
     <ClCompile Include="Common\moMatrixf.cpp" />
     <ClCompile Include="Common\moQuat.cpp" />
     <ClCompile Include="Common\moTimer.cpp" />
-    <ClCompile Include="DB\moPolygon.cpp" />
-    <ClCompile Include="DB\moPolygon.h" />
-    <ClCompile Include="DB\moRectRoom.h" />
-    <ClCompile Include="DB\moAlignShape.h" />
+    <ClCompile Include="DB\moAlignInfo.cpp" />
     <ClCompile Include="DB\moDataSource.cpp" />
+    <ClCompile Include="DB\moDoor.cpp" />
+    <ClCompile Include="DB\moElement.cpp" />
+    <ClCompile Include="DB\moElementFactory.cpp" />
+    <ClCompile Include="DB\moPolygon.cpp" />
+    <ClCompile Include="DB\moRoom.cpp" />
+    <ClCompile Include="DB\moShape.cpp" />
+    <ClCompile Include="DB\moVertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3rdParty\nlohmann\json.hpp" />
@@ -37,11 +41,16 @@
     <ClInclude Include="Common\moQuat.h" />
     <ClInclude Include="Common\moTimer.h" />
     <ClInclude Include="Common\moVec.h" />
+    <ClInclude Include="DB\moAlignInfo.h" />
+    <ClInclude Include="DB\moDataSource.h" />
     <ClInclude Include="DB\moDoor.h" />
+    <ClInclude Include="DB\moElement.h" />
+    <ClInclude Include="DB\moElementFactory.h" />
     <ClInclude Include="DB\moLine.h" />
+    <ClInclude Include="DB\moPolygon.h" />
+    <ClInclude Include="DB\moRoomRect.h" />
     <ClInclude Include="DB\moRoom.h" />
     <ClInclude Include="DB\moShape.h" />
-    <ClInclude Include="DB\moDataSource.h" />
     <ClInclude Include="DB\moVertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +100,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;FT_DEBUG_LEVEL_ERROR;HAVE_STRUCT_TIMESPEC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;MO_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

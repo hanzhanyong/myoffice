@@ -22,28 +22,44 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTI
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-#ifndef MYOFFICEDESIGN_ANALYSE_H_
-#define MYOFFICEDESIGN_ANALYSE_H_
+#ifndef MYOFFICEDESIGN_ELEMENT_H_
+#define MYOFFICEDESIGN_ELEMENT_H_
 
 #include "../Common/moExport.h"
-#include "../Common/moVec.h"
-#include "../DB/moPolygon.h"
-#include "../DB/moRoomRect.h"
-#include "../DB/moRoom.h"
-#include "../DB/moDataSource.h"
+#include "../3rdParty/nlohmann/json.hpp"
 
 namespace MyOffice {
-	namespace Analyse {
+	namespace DB {
 
-		class MO_EXPORT_DLL MoAnalyse
+		enum MoElementType
 		{
-		public:
-			//默认1前台  1会议室  2办公室
-			DB::MoDataSource *autoCal(const DB::MoRoom* room, int roomQTCount = 1, int roomHYCount = 1, int roomOfficeCount = 2 );
+			MET_NONE = 0,
+			MET_VERTEX = 1,//顶点
+			MET_LINE = 2,//线段
+			MET_ALIGNINFO = 3,//临靠对象
 
-		private:
-			//办公室内提取未被占领区域
-			virtual DB::MoRoom	*cutRoom(const DB::MoRoom* source,const DB::MoRoomRect* cutRect) { return NULL; };
+			MET_POLYGON = 10,//多边形
+			MET_RECT = 11,//矩形
+
+			MET_DOOR = 20,//门
+
+			MET_ROOM = 100,//房间
+		};
+
+		class MO_EXPORT_DLL MoElement
+		{
+		public://构造函数
+			MoElement(const nlohmann::json &_json = nullptr);
+		
+			//属性
+			virtual MoElementType	getShapeType() = 0;
+
+			int					getSeqNo();
+			void				setSeqNo(int _id);
+
+			virtual nlohmann::json	&toJson();
+		protected:
+			nlohmann::json			m_DataJson;
 		};
 	}
 }

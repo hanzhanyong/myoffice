@@ -39,7 +39,7 @@ namespace MyOffice {
 				MoElement() {}
 
 		public://属性
-			virtual MoShapeType	getShapeType() { return MST_LINE; }
+			virtual MoElementType	getShapeType() { return MET_LINE; }
 
 			MoVertex			&start() { return *m_StartVertex; }
 			MoVertex			&end() { return *m_EndVertex; }

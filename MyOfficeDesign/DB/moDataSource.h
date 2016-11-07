@@ -26,6 +26,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define MYOFFICEDESIGN_DATASOURCE_H_
 
 #include "moLine.h"
+#include "moRoom.h"
+#include "moDoor.h"
 #include <vector>
 namespace MyOffice {
 	namespace DB {
@@ -39,6 +41,11 @@ namespace MyOffice {
 		{
 		public://构造函数
 			MoDataSource(MoLisener *lisener=NULL):
+				m_Version(""),
+				m_IsCorrected(true),
+				m_CurrentRoomSeqNo(0),
+				m_CurrentShapeSeqNo(0),
+				m_CurrentVertexSeqNo(0),
 				m_Lisener(lisener)
 			{
 			}
@@ -46,25 +53,37 @@ namespace MyOffice {
 
 		public:
 			void	setLisener(MoLisener *lisener);
-			virtual bool open(const char* fileName);
 
-			virtual bool read(const char* jsonStr);
-			virtual void write(const char *);
+			virtual bool open(const char* fileName);
+			virtual bool save(const char* fileName);
+
+			MoVertex *   getVertex(int seqNo);
+			MoVertex *   createVertex(float x,float y);
+
+			MoRoom		*getRoom(int seqNo);
+			MoRoom		*getRoomVertex(int vseqNo);//根据节点获取房间
+			MoDoor		*getDoor(int seqNo);
 
 			virtual void add(MoVertex *vertex);
-			virtual void add(MoLine *line);
-
-			virtual void add(MoShape *shp);
-			virtual void remove(MoShape *shp);
-
+			virtual void add(MoRoom *room);
+			virtual void add(MoDoor *door);
 		protected:
-
-
+			virtual bool		 readJson(const char* jsonStr);
+			virtual std::string  getJson();
 		private:
-			std::vector<MoVertex*>	m_VertexArray;
-			std::vector<MoLine*>	m_LineArray;
-			std::vector<MoShape*>	m_ShpArray;
+			std::string				m_Version;
+			bool				    m_IsCorrected;
+			int					    m_CurrentRoomSeqNo;//当前房间Id编号的最大值
+			int						m_CurrentShapeSeqNo;
+			int						m_CurrentVertexSeqNo;
+
+			std::vector<MoElement*>	m_VertexArray;
+			std::vector<MoElement*>	m_RoomArray;
+			std::vector<MoElement*>	m_DoorArray;
+
 			MoLisener				*m_Lisener;
+
+			
 		};
 	}
 }

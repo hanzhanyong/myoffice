@@ -33,20 +33,20 @@ namespace MyOffice {
 		class MO_EXPORT_DLL MoPolygon : public MoShape
 		{
 		public://构造函数
-			MoPolygon() :
-				MoShape()
+			MoPolygon(const nlohmann::json &_json = nullptr):
+				MoShape(_json)
 			{
 
 			}
 
-		public://属性
-			virtual MoShapeType		getShapeType() { return MST_POLYGON; }
+			virtual MoElementType		getShapeType() { return MET_POLYGON; }
 
-			virtual unsigned int	getVertexCount() { return m_VertexArray.size(); }
-			virtual MoVertex		*getVertex(unsigned int index);
-			virtual void			addVertex(MoVertex *vertex);
-			virtual void			addVertex(float x, float y, float z = 0.0f);
+			unsigned int				getVertexCount() { return m_VertexArray.size(); }
+			MoVertex					*getVertex(unsigned int index);
 
+			virtual void				addVertex(MoVertex *vertex);
+			virtual void				insertVertex(MoVertex *vertex,unsigned int index=-1);
+			nlohmann::json				&toJson();
 		protected:
 			std::vector<MoVertex*>  m_VertexArray;
 		};

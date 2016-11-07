@@ -22,35 +22,23 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTI
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-#ifndef MYOFFICEDESIGN_ALIGNSHAPE_H_
-#define MYOFFICEDESIGN_ALIGNSHAPE_H_
+#ifndef MYOFFICEDESIGN_ELEMENT_FACTORY_H_
+#define MYOFFICEDESIGN_ELEMENT_FACTORY_H_
 
-#include "moShape.h"
-#include "moVertex.h"
+#include "moElement.h"
 
 namespace MyOffice {
 	namespace DB {
 
-		class MO_EXPORT_DLL MoAlignShape:public MoShape
+		class MO_EXPORT_DLL MoElementFactory
 		{
 		public://构造函数
-			MoAlignShape() :
-				m_VertexId(0),
-				m_Distance(0),
-				MoShape()
-			{}
+			MoElementFactory();
+			~MoElementFactory();
 
-		public://属性
-			int					getAlignVertexId() { return m_VertexId; }
-			void				setAlignVertexId(int _id) { m_VertexId = _id; }
-
-			MoVertex *			getAlignVertex() { return NULL; }
-
-			float				getDistance() { return m_Distance; }
-			void				setDistance(float _distance) { m_Distance = _distance; }
-		protected:
-			int					m_VertexId;
-			float				m_Distance;
+			static MoElementFactory *getInstance();
+		
+			static MoElement *create(MoElementType type, int seqNo=0);
 		};
 	}
 }

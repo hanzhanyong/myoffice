@@ -35,7 +35,15 @@ namespace MyOffice {
 		class MO_EXPORT_DLL MoVertex:public MoElement, public Vec3f
 		{
 		public:
-			virtual MoShapeType	getShapeType() { return MST_VERTEX; };
+			MoVertex(const nlohmann::json &_json = nullptr);
+
+			int			getNextSeqNo();
+			void		setNextSeqNo(int seqNo);
+			int			getPreSeqNo();
+			void		setPreSeqNo(int seqNo);
+
+			virtual MoElementType	getShapeType() { return MET_VERTEX; };
+			virtual nlohmann::json	&toJson();
 		};
 	}
 }

@@ -4,21 +4,6 @@
     <ClCompile Include="Common\moMath.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="DB\moAlignShape.h">
-      <Filter>DB</Filter>
-    </ClCompile>
-    <ClCompile Include="DB\moPolygon.h">
-      <Filter>DB</Filter>
-    </ClCompile>
-    <ClCompile Include="DB\moRectRoom.h">
-      <Filter>DB</Filter>
-    </ClCompile>
-    <ClCompile Include="DB\moPolygon.cpp">
-      <Filter>DB</Filter>
-    </ClCompile>
-    <ClCompile Include="DB\moDataSource.cpp">
-      <Filter>DB</Filter>
-    </ClCompile>
     <ClCompile Include="Analyse\moAnalyse.cpp">
       <Filter>Analyse</Filter>
     </ClCompile>
@@ -34,6 +19,33 @@
     <ClCompile Include="Common\moTimer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="DB\moDataSource.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moDoor.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moPolygon.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moRoom.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moShape.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moVertex.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moAlignInfo.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moElement.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\moElementFactory.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\moExport.h">
@@ -41,24 +53,6 @@
     </ClInclude>
     <ClInclude Include="Common\moMath.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moDoor.h">
-      <Filter>DB</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moLine.h">
-      <Filter>DB</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moRoom.h">
-      <Filter>DB</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moShape.h">
-      <Filter>DB</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moVertex.h">
-      <Filter>DB</Filter>
-    </ClInclude>
-    <ClInclude Include="DB\moDataSource.h">
-      <Filter>DB</Filter>
     </ClInclude>
     <ClInclude Include="3rdParty\nlohmann\json.hpp">
       <Filter>3rdParty\nlohmann</Filter>
@@ -92,6 +86,39 @@
     </ClInclude>
     <ClInclude Include="Common\moVec.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moDataSource.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moDoor.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moLine.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moPolygon.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moRoom.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moShape.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moVertex.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moAlignInfo.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moElement.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moElementFactory.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\moRoomRect.h">
+      <Filter>DB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,8 +22,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTI
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **********************************************************************************/
 
-#ifndef MYOFFICEDESIGN_ROOM_H_
-#define MYOFFICEDESIGN_ROOM_H_
+#ifndef MYOFFICEDESIGN_ROOM_H_RH
+#define MYOFFICEDESIGN_ROOM_H_RH
 #include "moLine.h"
 #include "moPolygon.h"
 #include "moDoor.h"
@@ -33,63 +33,23 @@ namespace MyOffice {
 		class MO_EXPORT_DLL MoRoom : public MoPolygon
 		{
 		public://构造函数
-			MoRoom() : MoPolygon()
-			{
-			}
-			~MoRoom()
-			{
-				MoPolygon::~MoPolygon();
-				int sizeLine = getLineCount();
-				for (int i = 0; i < sizeLine; i++)
-				{
-					MoLine *line = m_LineArray.at(i);
-					delete line;
-					m_LineArray.at(i) = NULL;
-				}
-				m_LineArray.clear();
-			}
+			MoRoom(const nlohmann::json &_json = nullptr);
+			~MoRoom();
 
-		public://属性
-			virtual MoShapeType	getShapeType() { return MST_ROOM; }
+			virtual MoElementType	getShapeType() { return MET_ROOM; }
 
-			unsigned int		 getLineCount() { return m_LineArray.size(); }
-			MoLine				*getLine(unsigned int index) { return m_LineArray[index]; }
+			int						getStartVSeqNo();
+			void					setStartVSeqNo(int seqNo);
 
-			virtual void		 addVertex( MoVertex *vertex)
-			{
-				//标记顺时针记录线段的前后关系
-				MoPolygon::addVertex(vertex);
+			virtual void			init();
+			//void				 addVertex(MoVertex *vertex);
 
-				
-				int vertexCount = m_VertexArray.size();
-				if (vertexCount == 0)return;
+			//unsigned int		 getLineCount() { return m_LineArray.size(); }
+			//MoLine				*getLine(unsigned int index) { return m_LineArray[index]; }
 
-				MoLine* currentLine = new MoLine();
-				currentLine->setParrent(this);
-				if (vertexCount == 1)
-				{
-					currentLine->start() = *m_VertexArray.at(vertexCount - 1);
-					currentLine->end() = *m_VertexArray.at(vertexCount - 1);
-				}
-				else
-				{
-					currentLine->start() = *m_VertexArray.at(vertexCount - 2);
-					currentLine->end() = *m_VertexArray.at(vertexCount - 1);
-
-					MoLine* firstLine = NULL;
-					MoLine* lastLine = NULL;
-					firstLine = m_LineArray.at(0);
-					lastLine  = m_LineArray.at(m_LineArray.size()-1);
-
-					firstLine->start() = currentLine->end();
-					lastLine->end() = currentLine->start();
-				}
-				
-				m_LineArray.push_back(currentLine);
-			}
-		protected:
-			std::vector<MoLine*> m_LineArray;
-
+			nlohmann::json			&toJson();
+		//protected:
+		//	std::vector<MoLine*> m_LineArray;
 		};
 	}
 }

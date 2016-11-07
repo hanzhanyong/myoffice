@@ -25,46 +25,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef MYOFFICEDESIGN_SHAPE_H_
 #define MYOFFICEDESIGN_SHAPE_H_
 
-#include "../Common/moExport.h"
-#include "../3rdParty/nlohmann/json.hpp"
+#include "moElement.h"
 
 namespace MyOffice {
 	namespace DB {
 
-		enum MoShapeType
-		{
-			MST_NONE = 0,
-			MST_VERTEX = 1,//顶点
-			MST_LINE = 2,//线段
-
-			MST_POLYGON = 10,//多边形
-			MST_RECT = 11,//矩形
-
-			MST_DOOR = 20,//门
-
-			MST_ROOM = 100,//房间
-		};
-
-		class MO_EXPORT_DLL MoElement
-		{
-		public://构造函数
-			MoElement()
-			{
-				static int mo_Globe_Id = 1;
-				m_Id = mo_Globe_Id++;
-			}
-		public://属性
-			int					getId() { return m_Id; }
-			void				setId(int _id) { m_Id = _id; }
-
-			
-			virtual MoShapeType	getShapeType() = 0;
-		protected:
-			int					m_Id;
-		};
+		class MoDataSource;
 		class MO_EXPORT_DLL MoShape:public MoElement
 		{
-		
+		public://构造函数
+			MoShape(const nlohmann::json &_json = nullptr);
+
+			const std::string&	getName();
+			void				setName(const std::string&);
+
+			MoDataSource*		getDataSource() { return m_DataSource; }
+			void				setDataSource(MoDataSource *dataSource) { m_DataSource = dataSource; }
+
+			virtual void		init() {}
+
+			virtual MoShape	   *clone();
+		protected:
+			std::string			m_Name;
+			MoDataSource		*m_DataSource;
 		};
 	}
 }

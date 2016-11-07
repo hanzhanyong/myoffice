@@ -7,24 +7,34 @@ MoVertex *MoPolygon::getVertex(unsigned int index)
 {
 	return m_VertexArray[index];;
 }
+
+//void	 MoPolygon::addVertex(float x, float y, float z)
+//{
+//	MoVertex *vertex = new MoVertex();
+//	vertex->set(x, y, z);
+//	addVertex(vertex);
+//}
 void	 MoPolygon::addVertex( MoVertex *vertex)
 {
-	//MoVertex *first = NULL;
-	//MoVertex *last = NULL;
-
-	//unsigned int verCount = m_VertexArray.size();
-	//if (verCount > 1)
-	//{
-	//	first = m_VertexArray[0];
-	//	last = m_VertexArray[verCount-1];
-	//}
-
 	m_VertexArray.push_back(vertex);
 }
-void	 MoPolygon::addVertex(float x, float y, float z)
+void MoPolygon::insertVertex(MoVertex *vertex, unsigned int index)
 {
-	MoVertex *vertex = new MoVertex();
-	vertex->set(x, y, z);
-	addVertex(vertex);
+	m_VertexArray.insert(m_VertexArray.begin() + index, vertex);
 }
+nlohmann::json	&MoPolygon::toJson()
+{
+	int numVertex = getVertexCount();
+	for (int i = 0; i < numVertex; i++)
+	{
+		MoVertex *vertex0 = i == 0 ? m_VertexArray[numVertex - 1] : m_VertexArray[i - 1];
+		MoVertex *vertex1 = m_VertexArray[i];
+		MoVertex *vertex2 = i == numVertex - 1 ? m_VertexArray[0] : m_VertexArray[i + 1];
 
+		vertex1->setNextSeqNo(vertex2->getSeqNo());
+		vertex1->setPreSeqNo(vertex0->getSeqNo());
+	}
+
+
+	return MoElement::toJson();
+}

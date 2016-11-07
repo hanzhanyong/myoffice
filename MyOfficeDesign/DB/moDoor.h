@@ -25,39 +25,35 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef MYOFFICEDESIGN_DOOR_H_
 #define MYOFFICEDESIGN_DOOR_H_
 
-#include "moAlignShape.h"
+#include "moAlignInfo.h"
+
 namespace MyOffice {
 	namespace DB {
 
-		class MO_EXPORT_DLL MoDoor : public MoAlignShape
+		class MO_EXPORT_DLL MoDoor : public MoShape
 		{
 		public://构造函数
-			MoDoor() : MoAlignShape()
-			{
-				
-			}
-
+			MoDoor(const nlohmann::json &_json = nullptr);
+			~MoDoor();
 		public://属性
-			virtual MoShapeType	getShapeType() { return MST_DOOR; }
+			virtual MoElementType	getShapeType() { return MET_DOOR; }
 
-			MoVertex    getLocation()
-			{
-				
-			}
+			float		getWidth();
+			void		setWidth(float w);
 
-			float		getLength() { return m_Length; }
-			void		setLength(float len) { m_Length = len; }
+			float		getHeight();
+			void		setHeight(float h);
 
-			float		getWidth() { return m_Width; }
-			void		setWidth(float w) { m_Width = w; }
+			float		getThickness();
+			void		setThickness(float t);
 
-			float		getHeight() { return m_Height; }
-			void		setHeight(float h) { m_Height = h; }
-		private:
-			float		m_Length;
-			float       m_Width;
-			
-			float		m_Height;
+			MoAlignInfo* alignInfo1() { return m_AlignInfo1; }
+			MoAlignInfo* alignInfo2() { return m_AlignInfo2; }
+
+			virtual		nlohmann::json	&toJson();
+		protected:
+			MoAlignInfo		*m_AlignInfo1;
+			MoAlignInfo		*m_AlignInfo2;
 		};
 	}
 }
