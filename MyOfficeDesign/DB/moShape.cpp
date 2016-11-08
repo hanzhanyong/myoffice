@@ -23,7 +23,7 @@ void					MoShape::setName(const std::string& name)
 	m_Name = name;
 	m_DataJson["name"] = name;
 }
-MoShape	   *MoShape::clone()
+MoShape	   *MoShape::cloneStruct()
 {
 	MoShape *shp = NULL;
 

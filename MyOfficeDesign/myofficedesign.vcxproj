@@ -24,6 +24,7 @@
     <ClCompile Include="DB\moElementFactory.cpp" />
     <ClCompile Include="DB\moPolygon.cpp" />
     <ClCompile Include="DB\moRoom.cpp" />
+    <ClCompile Include="DB\moRoomRect.cpp" />
     <ClCompile Include="DB\moShape.cpp" />
     <ClCompile Include="DB\moVertex.cpp" />
   </ItemGroup>

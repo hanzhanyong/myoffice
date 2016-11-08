@@ -212,6 +212,39 @@ MoVertex *   MoDataSource::createVertex(float x, float y)
 	vertex->set(x, y);
 	return vertex;
 }
+unsigned int MoDataSource::getRoomCount()
+{
+	return m_RoomArray.size();
+}
+MoRoom		*MoDataSource::getRoomIndex(unsigned int index)
+{
+	MoElement *ele = m_RoomArray[index];
+	return dynamic_cast<MoRoom*>(ele);
+}
+MoDoor		*MoDataSource::getDoorOnRoom(MoRoom		*room)
+{
+	unsigned int vertexCount = room->getVertexCount();
+	for (unsigned int i = 0; i < vertexCount; i++)
+	{
+		MoVertex *vertexRoom = room->getVertex(i);
+		unsigned int doorCount = m_DoorArray.size();
+		for (unsigned int j = 0; j < doorCount; j++)
+		{
+			MoDoor *door = dynamic_cast<MoDoor*>( m_DoorArray[j]);
+			MoAlignInfo *alignInfo = door->alignInfo1();
+			if (alignInfo&&alignInfo->getSeqNo()==vertexRoom->getSeqNo())
+			{
+				return door;
+			}
+			alignInfo = door->alignInfo2();
+			if (alignInfo&&alignInfo->getSeqNo() == vertexRoom->getSeqNo())
+			{
+				return door;
+			}
+		}
+	}
+	return NULL;
+}
 MoRoom	*MoDataSource::getRoom(int seqNo)
 {
 	int sizeV = m_RoomArray.size();
@@ -223,6 +256,7 @@ MoRoom	*MoDataSource::getRoom(int seqNo)
 	}
 	return NULL;
 }
+
 MoRoom	*MoDataSource::getRoomVertex(int vseqNo)
 {
 	unsigned int sizeV = m_RoomArray.size();

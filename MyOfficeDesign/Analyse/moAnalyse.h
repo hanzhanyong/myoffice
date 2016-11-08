@@ -39,11 +39,11 @@ namespace MyOffice {
 		{
 		public:
 			//默认1前台  1会议室  2办公室
-			DB::MoDataSource *autoCal(const DB::MoRoom* room, int roomQTCount = 1, int roomHYCount = 1, int roomOfficeCount = 2 );
+			DB::MoDataSource *autoCal(DB::MoRoom* room, DB::MoDoor* door, int roomQTCount = 1, int roomHYCount = 1, int roomOfficeCount = 2 );
 
 		private:
 			//办公室内提取未被占领区域
-			virtual DB::MoRoom	*cutRoom(const DB::MoRoom* source,const DB::MoRoomRect* cutRect) { return NULL; };
+			virtual DB::MoRoom	*cutRoom(DB::MoRoom* source,DB::MoRoomRect* cutRect) { return NULL; };
 		};
 	}
 }

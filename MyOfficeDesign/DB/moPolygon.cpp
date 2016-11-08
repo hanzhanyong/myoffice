@@ -18,10 +18,35 @@ void	 MoPolygon::addVertex( MoVertex *vertex)
 {
 	m_VertexArray.push_back(vertex);
 }
-void MoPolygon::insertVertex(MoVertex *vertex, unsigned int index)
+void	MoPolygon::removeVertex(MoVertex *vertex)
 {
-	m_VertexArray.insert(m_VertexArray.begin() + index, vertex);
+	std::vector<MoVertex*>::iterator itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end())
+	{
+		if ((*itor) == vertex)
+		{
+			m_VertexArray.erase(itor);
+			return;
+		}
+		itor++;
+	}
 }
+void* MoPolygon::insertAfterVertex(MoVertex* after, MoVertex *vertex)
+{
+	std::vector<MoVertex*>::iterator itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end())
+	{
+		if ((*itor) == after)
+		{
+			itor++;
+			m_VertexArray.insert(itor,vertex);
+			return NULL;
+		}
+		itor++;
+	}
+	return NULL;
+}
+
 nlohmann::json	&MoPolygon::toJson()
 {
 	int numVertex = getVertexCount();
@@ -31,8 +56,8 @@ nlohmann::json	&MoPolygon::toJson()
 		MoVertex *vertex1 = m_VertexArray[i];
 		MoVertex *vertex2 = i == numVertex - 1 ? m_VertexArray[0] : m_VertexArray[i + 1];
 
-		vertex1->setNextSeqNo(vertex2->getSeqNo());
-		vertex1->setPreSeqNo(vertex0->getSeqNo());
+		vertex1->setNextSeqNo(vertex0->getSeqNo());
+		vertex1->setPreSeqNo(vertex2->getSeqNo());
 	}
 
 

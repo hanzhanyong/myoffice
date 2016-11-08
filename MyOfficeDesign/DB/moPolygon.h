@@ -45,7 +45,8 @@ namespace MyOffice {
 			MoVertex					*getVertex(unsigned int index);
 
 			virtual void				addVertex(MoVertex *vertex);
-			virtual void				insertVertex(MoVertex *vertex,unsigned int index=-1);
+			virtual void				removeVertex(MoVertex *vertex);
+			virtual void*				insertAfterVertex(MoVertex* after,MoVertex *vertexNew);
 			nlohmann::json				&toJson();
 		protected:
 			std::vector<MoVertex*>  m_VertexArray;

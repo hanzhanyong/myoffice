@@ -36,21 +36,34 @@ namespace MyOffice {
 				m_StartVertex(NULL), 
 				m_EndVertex(NULL), 
 				m_Parrent(NULL), 
+				m_WallFlag(WF_OUTER),
 				MoElement() {}
 
+			enum WallFlag
+			{
+				WF_INNER,
+				WF_OUTER
+			};
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_LINE; }
 
-			MoVertex			&start() { return *m_StartVertex; }
-			MoVertex			&end() { return *m_EndVertex; }
+			WallFlag				getWallFlag() { return m_WallFlag; }
+			void					setWallFlag(WallFlag wallflag) { m_WallFlag = wallflag; }
 
-			MoShape*			getParrent() { return m_Parrent; }
-			void				setParrent(MoShape *shape) { m_Parrent = shape; }
+			MoVertex				*start() { return m_StartVertex; }
+			MoVertex				*end() { return m_EndVertex; }
+			void					setStart(MoVertex *v) { m_StartVertex = v; }
+			void					setEnd(MoVertex *v) { m_EndVertex = v; }
+			float					length() { return (*m_EndVertex - *m_StartVertex).length(); }
+
+			MoShape*				getParrent() { return m_Parrent; }
+			void					setParrent(MoShape *shape) { m_Parrent = shape; }
 		protected:
 			MoVertex				*m_StartVertex;
 			MoVertex				*m_EndVertex;
 
 			MoShape					*m_Parrent;
+			WallFlag				 m_WallFlag;
 		};
 	}
 }

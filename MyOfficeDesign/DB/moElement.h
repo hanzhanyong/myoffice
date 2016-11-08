@@ -54,8 +54,8 @@ namespace MyOffice {
 			//属性
 			virtual MoElementType	getShapeType() = 0;
 
-			int					getSeqNo();
-			void				setSeqNo(int _id);
+			virtual int				getSeqNo();
+			virtual void			setSeqNo(int _id);
 
 			virtual nlohmann::json	&toJson();
 		protected:

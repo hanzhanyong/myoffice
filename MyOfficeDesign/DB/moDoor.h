@@ -38,22 +38,26 @@ namespace MyOffice {
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_DOOR; }
 
-			float		getWidth();
-			void		setWidth(float w);
+			float					getWidth();
+			void					setWidth(float w);
 
-			float		getHeight();
-			void		setHeight(float h);
+			float					getHeight();
+			void					setHeight(float h);
 
-			float		getThickness();
-			void		setThickness(float t);
+			float					getThickness();
+			void					setThickness(float t);
 
-			MoAlignInfo* alignInfo1() { return m_AlignInfo1; }
-			MoAlignInfo* alignInfo2() { return m_AlignInfo2; }
+			MoAlignInfo*			alignInfo1() { return m_AlignInfo1; }
+			MoAlignInfo*			alignInfo2() { return m_AlignInfo2; }
 
-			virtual		nlohmann::json	&toJson();
+			MoVertex			   *alignInfo1Vertex();
+			MoVertex			   *alignInfo2Vertex();
+			Vec3f					getLocation();
+
+			virtual	nlohmann::json	&toJson();
 		protected:
-			MoAlignInfo		*m_AlignInfo1;
-			MoAlignInfo		*m_AlignInfo2;
+			MoAlignInfo				*m_AlignInfo1;
+			MoAlignInfo				*m_AlignInfo2;
 		};
 	}
 }

@@ -37,6 +37,8 @@ namespace MyOffice {
 			MoAlignInfo(const nlohmann::json &_json = nullptr);
 			virtual MoElementType	getShapeType() { return MET_ALIGNINFO; }
 
+			virtual int				getSeqNo();
+			virtual void			setSeqNo(int _id);
 			float					getX();
 			void					setX(float v);
 			float					getY();

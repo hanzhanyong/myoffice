@@ -42,14 +42,17 @@ namespace MyOffice {
 			void					setStartVSeqNo(int seqNo);
 
 			virtual void			init();
-			//void				 addVertex(MoVertex *vertex);
+			virtual void			addVertex(MoVertex *vertex);
+			virtual void			removeVertex(MoVertex *vertex);
+			virtual void*			insertAfterVertex(MoVertex* after, MoVertex *vertexNew);
 
-			//unsigned int		 getLineCount() { return m_LineArray.size(); }
-			//MoLine				*getLine(unsigned int index) { return m_LineArray[index]; }
+			unsigned int			getLineCount() { return m_LineArray.size(); }
+			MoLine				   *getLineIndex(unsigned int index) { return m_LineArray[index]; }
+			MoLine				   *getLine(int vStartSeqNo);//线段的起点坐标Id
 
 			nlohmann::json			&toJson();
 		//protected:
-		//	std::vector<MoLine*> m_LineArray;
+			std::vector<MoLine*>    m_LineArray;
 		};
 	}
 }

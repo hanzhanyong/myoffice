@@ -46,6 +46,9 @@
     <ClCompile Include="DB\moElementFactory.cpp">
       <Filter>DB</Filter>
     </ClCompile>
+    <ClCompile Include="DB\moRoomRect.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\moExport.h">

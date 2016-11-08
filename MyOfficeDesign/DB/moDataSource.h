@@ -41,7 +41,7 @@ namespace MyOffice {
 		{
 		public://构造函数
 			MoDataSource(MoLisener *lisener=NULL):
-				m_Version(""),
+				m_Version("2.0"),
 				m_IsCorrected(true),
 				m_CurrentRoomSeqNo(0),
 				m_CurrentShapeSeqNo(0),
@@ -59,6 +59,10 @@ namespace MyOffice {
 
 			MoVertex *   getVertex(int seqNo);
 			MoVertex *   createVertex(float x,float y);
+
+			unsigned int getRoomCount();
+			MoRoom		*getRoomIndex(unsigned int index);
+			MoDoor		*getDoorOnRoom(MoRoom		*);//获取房间的正门
 
 			MoRoom		*getRoom(int seqNo);
 			MoRoom		*getRoomVertex(int vseqNo);//根据节点获取房间

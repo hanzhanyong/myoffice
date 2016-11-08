@@ -44,7 +44,7 @@ namespace MyOffice {
 
 			virtual void		init() {}
 
-			virtual MoShape	   *clone();
+			virtual MoShape	   *cloneStruct();
 		protected:
 			std::string			m_Name;
 			MoDataSource		*m_DataSource;

@@ -32,15 +32,28 @@ namespace MyOffice {
 		class MO_EXPORT_DLL MoRoomRect : public MoRoom
 		{
 		public://构造函数
-
+			MoRoomRect(const nlohmann::json &_json = nullptr);
 
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_RECT; }
 
-			//MoLine				*left() { return m_LineArray[0]; }
-			//MoLine				*right() { return  m_LineArray[2]; }
-			//MoLine				*top() { return  m_LineArray[1]; }
-			//MoLine				*bottom() { return  m_LineArray[3]; }
+			enum RoomType
+			{
+				RT_LARGE = 1,//大
+				RT_MEDIUM = 2,//中
+				RT_SMALL = 3,//小
+				RT_SMALLSMALL = 4//小小
+			};
+
+			RoomType	    getRoomType() { return m_RoomType; }
+			void			setRoomType(RoomType type);
+
+			float			&width() { return m_Width; }  //表示矩形的宽
+			float			&length() { return m_Length; }//表示矩形的长
+		private:
+			RoomType        m_RoomType;
+			float			m_Length;
+			float			m_Width;
 		};
 	}
 }

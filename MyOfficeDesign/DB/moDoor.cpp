@@ -1,4 +1,5 @@
 ﻿#include "moDoor.h"
+#include "moDataSource.h"
 
 using namespace MyOffice;
 using namespace MyOffice::DB;
@@ -58,7 +59,37 @@ void		MoDoor::setThickness(float t)
 {
 	m_DataJson["thickness"] = t;
 }
+MoVertex			   *MoDoor::alignInfo1Vertex()
+{
+	if (alignInfo1())
+	{
+		MoDataSource *dataSource = this->getDataSource();
+		return dataSource->getVertex(alignInfo1()->getSeqNo());
+	}
+	return NULL;
+}
+MoVertex			   *MoDoor::alignInfo2Vertex()
+{
+	if (alignInfo2())
+	{
+		MoDataSource *dataSource = this->getDataSource();
+		return dataSource->getVertex(alignInfo2()->getSeqNo());
+	}
+	return NULL;
+}
+Vec3f		MoDoor::getLocation()
+{
+	MoDataSource *dataSource = this->getDataSource();
+	MoVertex *vertex = alignInfo1Vertex();
+	if (vertex == NULL)
+		vertex = alignInfo2Vertex();
+	MoVertex *vertexNext = dataSource->getVertex(vertex->getNextSeqNo());
 
+	Vec3f loc = *vertexNext - *vertex;
+	loc.normalize();
+	loc = (*vertex) + loc*(this->getWidth() / 2.0+ alignInfo1()->getX());
+	return loc;
+}
 nlohmann::json	&MoDoor::toJson()
 {
 	if (m_AlignInfo1)

@@ -7,6 +7,19 @@ MoAlignInfo::MoAlignInfo(const nlohmann::json &_json):
 {
 
 }
+
+int	 MoAlignInfo::getSeqNo()
+{
+	int _seqNo = -1;
+	if (!m_DataJson["vSeqNo"].is_null())
+		_seqNo = m_DataJson["vSeqNo"].get<int>();
+	return _seqNo;
+}
+void MoAlignInfo::setSeqNo(int _id)
+{
+	m_DataJson["vSeqNo"] = _id;
+}
+
 float					MoAlignInfo::getX()
 {
 	float _value = 0.0;

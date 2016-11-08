@@ -5,36 +5,61 @@
 
 #include <DB/moDataSource.h>
 #include <Analyse/moAnalyse.h>
-int main()
+
+void testWrite()
 {
 	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
 	datasource->open("D:\\jsonDemo1.json");
 
 	MyOffice::DB::MoRoom *roomSource = datasource->getRoom(0);
 
-	MyOffice::DB::MoRoom *room = dynamic_cast<MyOffice::DB::MoRoom *>( roomSource->clone());
-	
+	MyOffice::DB::MoRoom *room = dynamic_cast<MyOffice::DB::MoRoom *>(roomSource->cloneStruct());
+
 	MyOffice::DB::MoVertex *vertex = datasource->createVertex(5000, 200);
+	datasource->add(vertex);
+	room->setStartVSeqNo(vertex->getSeqNo());
+
 	room->addVertex(vertex);
+
 	vertex = datasource->createVertex(-5000, 200);
+	datasource->add(vertex);
 	room->addVertex(vertex);
+
 	vertex = datasource->createVertex(-5000, 7000);
+	datasource->add(vertex);
 	room->addVertex(vertex);
+
 	vertex = datasource->createVertex(5000, 7000);
+	datasource->add(vertex);
 	room->addVertex(vertex);
+
 	datasource->add(room);
 
 	datasource->save("D:\\jsonDemoResult.json");
 
+	delete datasource;
+}
+void testAnalyse()
+{
+	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
+	datasource->open("D:\\jsonDemo1.json");
 
+	MyOffice::DB::MoRoom *roomSource = datasource->getRoomIndex(0);
+	MyOffice::DB::MoDoor *doorSource = datasource->getDoorOnRoom(roomSource);
 
-	///MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
+	MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
+	MyOffice::DB::MoDataSource *datasourceAnalys = analyse->autoCal(roomSource, doorSource);
+	datasourceAnalys->save("D:\\jsonDemoResult.json");
 
-
-
-	/*MyOffice::DB::MoRoom room;*/
-	//room.addVertex();
-
+	delete datasourceAnalys;
+	delete datasource;
+}
+int main()
+{
+	//testWrite();
+	
+	testAnalyse();
     return 0;
 }
+
 
