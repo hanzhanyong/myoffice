@@ -95,6 +95,9 @@ bool MoDataSource::readJson(const char* src)
 		json temp = *it;
 		MoVertex* vertex = new MoVertex(temp);
 		this->add(vertex);
+
+		if (vertex->getSeqNo() >= m_CurrentVertexSeqNo)
+			m_CurrentVertexSeqNo = vertex->getSeqNo() + 1;
 	}
 	j = obj["rooms"];
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
@@ -103,6 +106,9 @@ bool MoDataSource::readJson(const char* src)
 		room->setDataSource(this);
 		room->init();
 		this->add(room);
+
+		if (room->getSeqNo() >= m_CurrentRoomSeqNo)
+			m_CurrentRoomSeqNo = room->getSeqNo() + 1;
 	}
 	j = obj["shapes"];
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
@@ -113,6 +119,9 @@ bool MoDataSource::readJson(const char* src)
 			door->setDataSource(this);
 			door->init();
 			this->add(door);
+
+			if (door->getSeqNo() >= m_CurrentShapeSeqNo)
+				m_CurrentShapeSeqNo = door->getSeqNo() + 1;
 		}
 	}
 	return true;

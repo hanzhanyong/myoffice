@@ -42,16 +42,15 @@ void testWrite()
 void testAnalyse()
 {
 	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
-	datasource->open("D:\\jsonDemo1.json");
+	datasource->open("D:\\jsonDemo4.json");
 
 	MyOffice::DB::MoRoom *roomSource = datasource->getRoomIndex(0);
 	MyOffice::DB::MoDoor *doorSource = datasource->getDoorOnRoom(roomSource);
 
 	MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
-	MyOffice::DB::MoDataSource *datasourceAnalys = analyse->autoCal(roomSource, doorSource);
-	datasourceAnalys->save("D:\\jsonDemoResult.json");
+	analyse->autoCal(roomSource, doorSource);
+	datasource->save("D:\\jsonDemoResult.json");
 
-	delete datasourceAnalys;
 	delete datasource;
 }
 int main()

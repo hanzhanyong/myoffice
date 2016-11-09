@@ -133,12 +133,26 @@ MoDataSource *MoAnalyse::autoCal(
 		}
 
 		//8
-		dataSource->add(vlinePre);
-		dataSource->add(vlineNext);
+		if (vlinePre->getPreSeqNo() == -1)dataSource->add(vlinePre);
+		if (vlineNext->getPreSeqNo() == -1)dataSource->add(vlineNext);
 		receptionRoom->addVertex(doorLine->start());
 		receptionRoom->addVertex(doorLine->end());
-		receptionRoom->addVertex(vlinePre);
-		receptionRoom->addVertex(vlineNext);
+		if (doorLinePre->end() == vlinePre)//同边线共用点，需要复制一份给新的房间使用
+		{
+			MoVertex *vertex = dataSource->createVertex(vlinePre->x(), vlinePre->y());
+			dataSource->add(vertex);
+			receptionRoom->addVertex(vertex);
+		}
+		else
+			receptionRoom->addVertex(vlinePre);
+		if (doorLineNext->start() == vlineNext)//同边线共用点，需要复制一份给新的房间使用
+		{
+			MoVertex *vertex = dataSource->createVertex(vlineNext->x(), vlineNext->y());
+			dataSource->add(vertex);
+			receptionRoom->addVertex(vertex);
+		}
+		else
+			receptionRoom->addVertex(vlineNext);
 		receptionRoom->setStartVSeqNo(doorLine->start()->getSeqNo());
 		dataSource->add(receptionRoom);
 
