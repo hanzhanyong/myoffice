@@ -26,10 +26,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define MYOFFICEDESIGN_ANALYSE_H_
 
 #include "../Common/moExport.h"
-#include "../Common/moVec.h"
-#include "../DB/moPolygon.h"
-#include "../DB/moRoomRect.h"
-#include "../DB/moRoom.h"
 #include "../DB/moDataSource.h"
 
 namespace MyOffice {
@@ -39,11 +35,11 @@ namespace MyOffice {
 		{
 		public:
 			//默认1前台  1会议室  2办公室
-			DB::MoDataSource *autoCal(DB::MoRoom* room, DB::MoDoor* door, int roomQTCount = 1, int roomHYCount = 1, int roomOfficeCount = 2 );
+			bool autoCal(DB::MoDataSource *dataSource, int roomQTCount = 1, int roomHYCount = 1, int roomOfficeCount = 2 );
 
 		private:
 			//办公室内提取未被占领区域
-			virtual DB::MoRoom	*cutRoom(DB::MoRoom* source,DB::MoRoomRect* cutRect) { return NULL; };
+			//virtual DB::MoRoom	*cutRoom(DB::MoRoom* source,DB::MoRoomRect* cutRect) { return NULL; };
 		};
 	}
 }

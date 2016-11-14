@@ -29,6 +29,10 @@ int		MoRoom::getStartVSeqNo()
 }
 void	MoRoom::setStartVSeqNo(int seqNo)
 {
+	if (seqNo == -1&&getVertexCount()>0)
+	{
+		seqNo = m_VertexArray[0]->getSeqNo();
+	}
 	m_DataJson["sttVSeqNo"] = seqNo;
 }
 void MoRoom::init()
@@ -91,6 +95,16 @@ void	MoRoom::removeVertex(MoVertex *vertex)
 		{
 			int seqNo = vertex->getNextSeqNo();
 			MoLine *afterLineNext = getLine(seqNo);
+			if (itor == m_LineArray.end())
+			{
+				afterLineNext = m_LineArray[0];
+			}
+			else
+			{
+				std::vector<MoLine*>::iterator itorcur = itor + 1;
+				afterLineNext = *itorcur;
+			}
+
 
 			afterLineNext->setEnd(currentLine->end());
 
@@ -113,10 +127,16 @@ void*	MoRoom::insertAfterVertex(MoVertex* after, MoVertex *vertexNew)
 		MoLine *afterLine = *itor;
 		if (afterLine->start() == after)
 		{
-			MoLine *afterLinePre = getLine(after->getPreSeqNo());
+			itor++;
+			MoLine *afterLinePre = NULL; //getLine(after->getPreSeqNo());
+			if (itor == m_LineArray.end())
+				afterLinePre = m_LineArray[0];
+			else
+				afterLinePre = *itor;
+
 			MoLine* currentLine = new MoLine();
 			currentLine->setParrent(this);
-			itor++;
+			
 			m_LineArray.insert(itor, currentLine);
 
 			currentLine->setStart(vertexNew);
