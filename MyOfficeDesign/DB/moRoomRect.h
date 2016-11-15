@@ -37,21 +37,21 @@ namespace MyOffice {
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_RECT; }
 
-			enum RoomType
+			enum RoomSizeType
 			{
-				RT_LARGE = 1,//大
-				RT_MEDIUM = 2,//中
-				RT_SMALL = 3,//小
-				RT_SMALLSMALL = 4//小小
+				RST_LARGE = 1,//大
+				RST_MEDIUM = 2,//中
+				RST_SMALL = 3,//小
+				RST_SMALLSMALL = 4//小小
 			};
 
-			RoomType	    getRoomType() { return m_RoomType; }
-			void			setRoomType(RoomType type);
+			RoomSizeType	getRoomSizeType() { return m_RoomSizeType; }
+			void			setRoomSizeType(RoomSizeType type);
 
 			float			&width() { return m_Width; }  //表示矩形的宽
 			float			&length() { return m_Length; }//表示矩形的长
 		private:
-			RoomType        m_RoomType;
+			RoomSizeType    m_RoomSizeType;
 			float			m_Length;
 			float			m_Width;
 		};

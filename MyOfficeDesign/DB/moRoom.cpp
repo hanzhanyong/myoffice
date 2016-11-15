@@ -4,6 +4,7 @@ using namespace MyOffice;
 using namespace MyOffice::DB;
 
 MoRoom::MoRoom(const nlohmann::json &_json):
+	m_RoomType(RT_NONE),
 	MoPolygon(_json)
 {
 
@@ -58,7 +59,6 @@ void MoRoom::addVertex(MoVertex *vertex)
 {
 	//标记顺时针记录线段的前后关系
 	MoPolygon::addVertex(vertex);
-
 
 	int vertexCount = m_VertexArray.size();
 

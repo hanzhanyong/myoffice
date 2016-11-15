@@ -49,6 +49,27 @@
     <ClCompile Include="DB\moRoomRect.cpp">
       <Filter>DB</Filter>
     </ClCompile>
+    <ClCompile Include="Analyse\moAnalyseResult.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse2.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse3.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse4.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse5.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse6.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
+    <ClCompile Include="Analyse\moAnalyse7.cpp">
+      <Filter>Analyse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\moExport.h">
@@ -122,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="DB\moRoomRect.h">
       <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="Analyse\moAnalyseResult.h">
+      <Filter>Analyse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using namespace MyOffice::DB;
 MoRoomRect::MoRoomRect(const nlohmann::json &_json):
 	m_Length(4500),
 	m_Width(3500),
-	m_RoomType(RT_MEDIUM),
+	m_RoomSizeType(RST_MEDIUM),
 	MoRoom(_json)
 {
 	/*房间的规格 (单位米)
@@ -29,24 +29,24 @@ MoRoomRect::MoRoomRect(const nlohmann::json &_json):
 	
 	*/
 }
-void			MoRoomRect::setRoomType(RoomType type)
+void			MoRoomRect::setRoomSizeType(RoomSizeType type)
 {
-	m_RoomType = type;
+	m_RoomSizeType = type;
 	switch (type)
 	{
-	case MyOffice::DB::MoRoomRect::RT_LARGE:
+	case MyOffice::DB::MoRoomRect::RST_LARGE:
 		m_Length = 5000;
 		m_Width = 4000;
 		break;
-	case MyOffice::DB::MoRoomRect::RT_MEDIUM:
+	case MyOffice::DB::MoRoomRect::RST_MEDIUM:
 		m_Length = 4500;
 		m_Width = 3500;
 		break;
-	case MyOffice::DB::MoRoomRect::RT_SMALL:
+	case MyOffice::DB::MoRoomRect::RST_SMALL:
 		m_Length = 4000;
 		m_Width = 3000;
 		break;
-	case MyOffice::DB::MoRoomRect::RT_SMALLSMALL:
+	case MyOffice::DB::MoRoomRect::RST_SMALLSMALL:
 		m_Length = 3000;
 		m_Width = 2000;
 		break;

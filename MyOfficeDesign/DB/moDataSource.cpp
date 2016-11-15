@@ -203,6 +203,7 @@ std::string MoDataSource::getJson()
 //	m_CurrentVertexSeqNo++;
 //	add(vertex);
 //}
+
 MoVertex *   MoDataSource::getVertex(int seqNo)
 {
 	int sizeV = m_VertexArray.size();

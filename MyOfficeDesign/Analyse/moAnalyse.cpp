@@ -1,4 +1,6 @@
 ﻿#include "moAnalyse.h"
+#include "moAnalyseResult.h"
+
 #include "../Common/moVec.h"
 #include "../Common/moMath.h"
 #include "../Common/moMatrix.h"
@@ -11,35 +13,75 @@
 using namespace MyOffice;
 using namespace MyOffice::DB;
 using namespace MyOffice::Analyse;
+/*
+	1、方案的管理（datasource）
+	2、前台区域的计算，切割剩余区域
+	3、办公室区域的计算，切割剩余区域
+	4、前台、办公室门口位置计算
+	5、连通前台、办公室的主道路计算（最短路径，线是横竖连接），多条主要道路
+	6、使用主道路切割多个剩余区域
+	7、会议室区域计算，（由近及远计算剩余区域是否适合会议室），切割剩余区域
+*/
 
-bool MoAnalyse::autoCal(
+MoAnalyseResult *MoAnalyse::autoAnalyse(
 	DB::MoDataSource *dataSource,
 	int roomQTCount,		/*前台*/
 	int roomHYCount,		/*会议室*/
 	int roomOfficeCount		/*办公室*/)
 {
-	//MoDataSource *dataSource = room->getDataSource();
+	MoAnalyseResult *result = new MoAnalyseResult();
+	result->addDataSource(dataSource);
+
+	calReceptionRoom(result,roomQTCount);
+	calOfficeRoom(result, roomOfficeCount);
+	calDoorOfRoom(result);
+	calMailRoad(result);
+	calCutZone(result);
+	calMeetingRoom(result);
+	adjustData(result);
+
+	return result;
+}
+
+
+//1 前台区域计算
+void MoAnalyse::calReceptionRoom(MoAnalyseResult *result, int num)
+{
+	if (num == 0)return;
+	if (result->getDataSourceCount() == 0)return;
+
+	//获取不包含此RoomType的数据源
+	MoDataSource *ds = result->getValidAnalyzeDS(MoRoom::RT_RECEPTION);
+	while (ds)
+	{
+		calReceptionRoom(ds, num);
+		ds = result->getValidAnalyzeDS(MoRoom::RT_RECEPTION);
+	}
+}
+void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
+{
 	DB::MoRoom* room = dataSource->getRoomIndex(0);
 	MyOffice::DB::MoDoor *door = dataSource->getDoorOnRoom(room);
 	//先不要考虑结果的方案
 	/*
 	1.	前台区域计算（规格大小的前台区域）
 
-	?	入户门口所在墙线的一半，是否小于前台区域短边
-	?	是，整个墙线作为前台区域的短边
-	?	否，计算入户门到所在墙线的左右顶点位置的距离，取距离短的顶点P
-	?	判定前台的长边是否小于门到墙线顶点P距离的一半
-	?	是，前台区域的应以门为中心，向两边延伸
-	?	否，前台区域应以墙线顶点P向门口位置延伸
-	?	计算前台区域的垂直门口所在墙线的另外两坐标点
+	入户门口所在墙线的一半，是否小于前台区域短边
+	是，整个墙线作为前台区域的短边
+	否，计算入户门到所在墙线的左右顶点位置的距离，取距离短的顶点P
+	判定前台的长边是否小于门到墙线顶点P距离的一半
+	是，前台区域的应以门为中心，向两边延伸
+	否，前台区域应以墙线顶点P向门口位置延伸
+	计算前台区域的垂直门口所在墙线的另外两坐标点
 
-	?	垂直方向有墙边的，判断墙边的长度是否比规定的前台边长大
-	?	大，直接添加墙的顶点
-	?	小，墙的顶点应包含在前台区域边线内，添加延伸顶点
-		或者直接到墙的顶点位置即可
+	垂直方向有墙边的，判断墙边的长度是否比规定的前台边长大
+	大，直接添加墙的顶点
+	小，墙的顶点应包含在前台区域边线内，添加延伸顶点
+	或者直接到墙的顶点位置即可
 	*/
 	MoRoomRect *receptionRoom = new MoRoomRect();
-	receptionRoom->setRoomType(MoRoomRect::RT_MEDIUM);
+	receptionRoom->setRoomType(MoRoom::RT_RECEPTION);
+	receptionRoom->setRoomSizeType(MoRoomRect::RST_MEDIUM);
 
 	MoVertex *alignVertex = door->alignInfo1Vertex();
 	MoLine *doorLine = room->getLine(alignVertex->getSeqNo());
@@ -53,7 +95,7 @@ bool MoAnalyse::autoCal(
 
 	if (doorLine->length() / 2.0 < receptionRoom->width())
 	{
-		
+
 		/*
 		1判断线段的长度的二分之一是否比前台房间的长度大
 		2是，直接在线段上添加添加顶点
@@ -66,12 +108,12 @@ bool MoAnalyse::autoCal(
 		9 room移除所在门线段的两端点
 		10 room添加内墙线1-3边，标记为内墙线
 		*/
-		
+
 		//1
 		if (doorLineNext->length() / 2.0 > receptionRoom->length())
 		{
 			//2
-			Vec3f ptUnit = *doorLineNext->start()- *doorLineNext->end();
+			Vec3f ptUnit = *doorLineNext->start() - *doorLineNext->end();
 			ptUnit.normalize();
 			Vec3f pt = *doorLineNext->end() + ptUnit * receptionRoom->length();
 			vReceptionRoomNext = dataSource->createVertex(pt.x(), pt.y());
@@ -80,7 +122,7 @@ bool MoAnalyse::autoCal(
 		if (vReceptionRoomNext == NULL)
 		{
 			//3
-			if (doorLineNext->length() > receptionRoom->length()/2)
+			if (doorLineNext->length() > receptionRoom->length() / 2)
 			{
 				//4
 				vReceptionRoomNext = doorLineNext->start();
@@ -134,7 +176,7 @@ bool MoAnalyse::autoCal(
 			Vec3f pt = *doorLine->end() + ptUnit * (*vReceptionRoomNext - *doorLine->start()).length();
 			vReceptionRoomPre = dataSource->createVertex(pt.x(), pt.y());
 		}
-		else if ((*vReceptionRoomNext - *doorLine->start()).length()+1.0 < (*vReceptionRoomPre - *doorLine->end()).length())
+		else if ((*vReceptionRoomNext - *doorLine->start()).length() + 1.0 < (*vReceptionRoomPre - *doorLine->end()).length())
 		{
 			//7
 			Vec3f ptUnit = *vReceptionRoomNext - *doorLine->start();
@@ -167,9 +209,9 @@ bool MoAnalyse::autoCal(
 		receptionRoom->setStartVSeqNo(doorLine->start()->getSeqNo());
 		dataSource->add(receptionRoom);
 
-		
+
 		//10
-		
+
 		if (doorLineNext->start() != vReceptionRoomNext)
 		{
 			vReceptionRoomNext = dataSource->createVertex(vReceptionRoomNext->x(), vReceptionRoomNext->y());//重现复制一个点给room使用
@@ -251,7 +293,7 @@ bool MoAnalyse::autoCal(
 			}
 		}
 
-		
+
 		Matrixf mt;
 		mt.makeRotate(DegreesToRadians(90.0f), 0.0f, 0.0f, 1.0f);
 		Vec3f ptUnitH = (*doorLine->end()) - (*doorLine->start());
@@ -286,7 +328,7 @@ bool MoAnalyse::autoCal(
 			vReceptionRoomPre = dataSource->createVertex(pt.x(), pt.y());
 		}
 
-		
+
 
 		//9
 		if (vReceptionRoomNext_Bottom->getPreSeqNo() == -1)
@@ -335,7 +377,7 @@ bool MoAnalyse::autoCal(
 		dataSource->add(receptionRoom);
 		//设置入户门临靠点信息
 		door->alignInfo1()->setSeqNo(vReceptionRoomNext_Bottom->getSeqNo());
-		door->alignInfo1()->setX(door->alignInfo1()->getX() - (*vReceptionRoomNext_Bottom-*doorLine->start()).length());
+		door->alignInfo1()->setX(door->alignInfo1()->getX() - (*vReceptionRoomNext_Bottom - *doorLine->start()).length());
 
 
 		//10
@@ -391,15 +433,10 @@ bool MoAnalyse::autoCal(
 		}
 
 
-		
+
 
 		room->setStartVSeqNo(-1);
 		/*MoLine *line = room->getLine(vReceptionRoomNext->getSeqNo());
 		line->setWallFlag(MoLine::WF_INNER);*/
 	}
-
-	
-
-
-	return true;
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+}

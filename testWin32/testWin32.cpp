@@ -42,13 +42,24 @@ void testWrite()
 void testAnalyse()
 {
 	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
-	datasource->open("D:\\jsonDemo11.json");
+	datasource->open("D:\\mapftest\\jsonDemo11.json");
 
-	MyOffice::Analyse::MoAnalyse *analyse = new MyOffice::Analyse::MoAnalyse();
-	analyse->autoCal(datasource);
-	datasource->save("D:\\jsonDemoResult.json");
+	MyOffice::Analyse::MoAnalyseResult *result = 
+		MyOffice::Analyse::MoAnalyse::autoAnalyse(datasource);
+	
 
-	delete datasource;
+	char fileName[128];
+	unsigned int analyseCount = result->getDataSourceCount();
+	for (unsigned int i = 0; i < analyseCount; i++)
+	{
+		MyOffice::DB::MoDataSource *ds = result->getDataSource(i);
+		
+		sprintf_s(fileName, "D:\\mapftest\\jsonDemoResult%d.json", i);
+		ds->save(fileName);
+	}
+	
+
+	delete result;
 }
 int main()
 {

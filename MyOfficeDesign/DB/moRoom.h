@@ -38,6 +38,21 @@ namespace MyOffice {
 
 			virtual MoElementType	getShapeType() { return MET_ROOM; }
 
+
+			enum RoomType
+			{
+				RT_NONE = 0,//none
+				RT_RECEPTION = 1,//前台
+				RT_OFFICE = 2,//办公室
+				RT_MEETING = 3,//会议室
+				RT_ROAD = 4,//通道道路
+				RT_VIRTUALROOM = 5,//虚拟办公室房间
+				RT_VIRTUALZONE = 6,//虚拟区域
+			};
+
+			RoomType				getRoomType() { return m_RoomType; }
+			void					setRoomType(RoomType type) { m_RoomType = type; }
+
 			int						getStartVSeqNo();
 			void					setStartVSeqNo(int seqNo);
 
@@ -51,8 +66,9 @@ namespace MyOffice {
 			MoLine				   *getLine(int vStartSeqNo);//线段的起点坐标Id
 
 			nlohmann::json			&toJson();
-		//protected:
+		protected:
 			std::vector<MoLine*>    m_LineArray;
+			RoomType				m_RoomType;
 		};
 	}
 }
