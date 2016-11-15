@@ -93,6 +93,14 @@ void	MoRoom::removeVertex(MoVertex *vertex)
 		MoLine* currentLine = *itor;
 		if (currentLine->start() == vertex)
 		{
+			MoLine *afterLineNext = NULL;
+			if (itor == m_LineArray.begin())
+			{
+				afterLineNext = m_LineArray[m_LineArray.size()-1];
+			}
+			else
+				afterLineNext = *(--itor);
+/*
 			int seqNo = vertex->getNextSeqNo();
 			MoLine *afterLineNext = getLine(seqNo);
 			if (itor == m_LineArray.end())
@@ -102,8 +110,11 @@ void	MoRoom::removeVertex(MoVertex *vertex)
 			else
 			{
 				std::vector<MoLine*>::iterator itorcur = itor + 1;
-				afterLineNext = *itorcur;
-			}
+				if(itorcur == m_LineArray.end())
+					afterLineNext = m_LineArray[0];
+				else
+					afterLineNext = *itorcur;
+			}*/
 
 
 			afterLineNext->setEnd(currentLine->end());

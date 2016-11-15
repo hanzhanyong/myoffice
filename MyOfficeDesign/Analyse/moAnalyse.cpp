@@ -95,7 +95,6 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 
 	if (doorLine->length() / 2.0 < receptionRoom->width())
 	{
-
 		/*
 		1判断线段的长度的二分之一是否比前台房间的长度大
 		2是，直接在线段上添加添加顶点
@@ -167,7 +166,7 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 		}
 
 		//6
-		printf("len1=%f   len2=%f", (*vReceptionRoomNext - *doorLine->start()).length(), (*vReceptionRoomPre - *doorLine->end()).length());
+		//printf("len1=%f   len2=%f", (*vReceptionRoomNext - *doorLine->start()).length(), (*vReceptionRoomPre - *doorLine->end()).length());
 		if ((*vReceptionRoomNext - *doorLine->start()).length() > 1.0 + (*vReceptionRoomPre - *doorLine->end()).length())
 		{
 			//7
@@ -292,6 +291,14 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 				vReceptionRoomPre = doorLinePre->end();
 			}
 		}
+		else
+		{
+			//6
+			if (curVerticalLen*1.5 > doorLinePre->length())
+			{
+				curVerticalLen = doorLinePre->length();
+			}
+		}
 
 
 		Matrixf mt;
@@ -381,44 +388,52 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 
 
 		//10
-		if (doorLine->end() != vReceptionRoomPre_Bottom)
+		MoVertex *vdoorLineStart = doorLine->start();
+		MoVertex *vdoorLineEnd = doorLine->end();
+		MoVertex *vdoorLineNext= doorLineNext->start();
+		MoVertex *vdoorLinePre = doorLinePre->end();
+
+		if (vdoorLineEnd != vReceptionRoomPre_Bottom)
 		{
-			vReceptionRoomNext_Bottom = dataSource->createVertex(vReceptionRoomPre_Bottom->x(), vReceptionRoomPre_Bottom->y());//重现复制一个点给room使用
+			vReceptionRoomPre_Bottom = dataSource->createVertex(vReceptionRoomPre_Bottom->x(), vReceptionRoomPre_Bottom->y());//重现复制一个点给room使用
 			dataSource->add(vReceptionRoomPre_Bottom);
-			void*  vobj = room->insertAfterVertex(doorLine->start(), vReceptionRoomPre_Bottom);
+			void*  vobj = room->insertAfterVertex(vdoorLineStart, vReceptionRoomPre_Bottom);
 			MoLine *line = (MoLine*)vobj;
 			line->setWallFlag(MoLine::WF_INNER);
 		}
-		else
-		{
-			room->removeVertex(vReceptionRoomPre_Bottom);
-		}
+		//else
+		//{
+		//	room->removeVertex(vReceptionRoomPre_Bottom);
+		//}
 
-		if (doorLine->start() != vReceptionRoomNext_Bottom)
+		if (vdoorLineStart != vReceptionRoomNext_Bottom)
 		{
 			vReceptionRoomNext_Bottom = dataSource->createVertex(vReceptionRoomNext_Bottom->x(), vReceptionRoomNext_Bottom->y());//重现复制一个点给room使用
 			dataSource->add(vReceptionRoomNext_Bottom);
-			void*  vobj = room->insertAfterVertex(doorLine->start(), vReceptionRoomNext_Bottom);
+			void*  vobj = room->insertAfterVertex(vdoorLineStart, vReceptionRoomNext_Bottom);
 			MoLine *line = (MoLine*)vobj;
 			line->setWallFlag(MoLine::WF_INNER);
 		}
-		else
+		/*else
 		{
 			room->removeVertex(vReceptionRoomNext_Bottom);
-		}
+			vReceptionRoomNext_Bottom = NULL;
+		}*/
 
-		if (doorLineNext->start() != vReceptionRoomNext)
+		if (vdoorLineNext != vReceptionRoomNext)
 		{
 			vReceptionRoomNext = dataSource->createVertex(vReceptionRoomNext->x(), vReceptionRoomNext->y());
 			dataSource->add(vReceptionRoomNext);
-
-			void*  vobj = room->insertAfterVertex(vReceptionRoomNext_Bottom, vReceptionRoomNext);
+			void*  vobj = NULL;
+			vobj = room->insertAfterVertex(vReceptionRoomNext_Bottom, vReceptionRoomNext);
+			
 			MoLine *line = (MoLine*)vobj;
 			line->setWallFlag(MoLine::WF_INNER);
 		}
-		else
-			room->removeVertex(vReceptionRoomNext);
-		if (doorLineNext->start() != vReceptionRoomPre)
+		/*else
+			room->removeVertex(vReceptionRoomNext);*/
+
+		if (vdoorLinePre != vReceptionRoomPre)
 		{
 			vReceptionRoomPre = dataSource->createVertex(vReceptionRoomPre->x(), vReceptionRoomPre->y());
 			dataSource->add(vReceptionRoomPre);
@@ -432,7 +447,12 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 			room->removeVertex(vReceptionRoomPre);
 		}
 
-
+		if (vdoorLineEnd == vReceptionRoomPre_Bottom)
+			room->removeVertex(vReceptionRoomPre_Bottom);
+		if (vdoorLineStart == vReceptionRoomNext_Bottom)
+			room->removeVertex(vReceptionRoomNext_Bottom);
+		if (vdoorLineNext == vReceptionRoomNext)
+			room->removeVertex(vReceptionRoomNext);
 
 
 		room->setStartVSeqNo(-1);

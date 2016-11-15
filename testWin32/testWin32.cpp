@@ -42,7 +42,7 @@ void testWrite()
 void testAnalyse()
 {
 	MyOffice::DB::MoDataSource *datasource = new MyOffice::DB::MoDataSource();
-	datasource->open("D:\\mapftest\\jsonDemo11.json");
+	datasource->open("D:\\mapftest\\jsonDemo16.json");
 
 	MyOffice::Analyse::MoAnalyseResult *result = 
 		MyOffice::Analyse::MoAnalyse::autoAnalyse(datasource);
