@@ -37,7 +37,7 @@ namespace MyOffice {
 			~MoRoom();
 
 			virtual MoElementType	getShapeType() { return MET_ROOM; }
-
+			virtual MoElement *	    clone();
 
 			enum RoomType
 			{

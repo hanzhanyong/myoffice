@@ -3,6 +3,13 @@
 using namespace MyOffice;
 using namespace MyOffice::DB;
 
+MoElement *	   MoPolygon::clone()
+{
+	nlohmann::json &data = this->toJson();
+	MoPolygon *shp = new MoPolygon(data);
+	return shp;
+}
+
 MoVertex *MoPolygon::getVertex(unsigned int index)
 {
 	return m_VertexArray[index];;

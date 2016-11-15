@@ -57,6 +57,8 @@ namespace MyOffice {
 			virtual bool open(const char* fileName);
 			virtual bool save(const char* fileName);
 
+			MoDataSource *clone();
+
 			MoVertex *   getVertex(int seqNo);
 			MoVertex *   createVertex(float x,float y);
 

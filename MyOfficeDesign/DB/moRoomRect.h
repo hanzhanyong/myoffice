@@ -36,6 +36,7 @@ namespace MyOffice {
 
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_RECT; }
+			virtual MoElement *	    clone();
 
 			enum RoomSizeType
 			{

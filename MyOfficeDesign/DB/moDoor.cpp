@@ -24,6 +24,12 @@ MoDoor::~MoDoor()
 		delete m_AlignInfo2;
 	m_AlignInfo2 = NULL;
 }
+MoElement *	   MoDoor::clone()
+{
+	nlohmann::json &data = this->toJson();
+	MoDoor *shp = new MoDoor(data);
+	return shp;
+}
 float		MoDoor::getWidth()
 {
 	float _width = 900;

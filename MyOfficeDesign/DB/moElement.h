@@ -53,6 +53,7 @@ namespace MyOffice {
 		
 			//属性
 			virtual MoElementType	getShapeType() = 0;
+			virtual MoElement *	    clone() { return NULL; }
 
 			virtual int				getSeqNo();
 			virtual void			setSeqNo(int _id);

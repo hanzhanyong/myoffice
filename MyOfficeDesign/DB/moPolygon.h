@@ -40,6 +40,7 @@ namespace MyOffice {
 			}
 
 			virtual MoElementType		getShapeType() { return MET_POLYGON; }
+			virtual MoElement *			clone();
 
 			unsigned int				getVertexCount() { return m_VertexArray.size(); }
 			MoVertex					*getVertex(unsigned int index);

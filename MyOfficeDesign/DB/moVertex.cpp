@@ -10,6 +10,14 @@ MoElement(_json)
 	if (!m_DataJson["x"].is_null())x() = m_DataJson["x"].get<float>();
 	if (!m_DataJson["y"].is_null())y() = m_DataJson["y"].get<float>();
 }
+
+MoElement *	   MoVertex::clone() 
+{ 
+	nlohmann::json &data = this->toJson();
+	MoVertex *vertex = new MoVertex(data);
+	return vertex;
+}
+
 int			MoVertex::getNextSeqNo()
 {
 	int _seqNo = -1;

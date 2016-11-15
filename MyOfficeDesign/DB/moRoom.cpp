@@ -21,6 +21,12 @@ MoRoom::~MoRoom()
 	}
 	m_LineArray.clear();
 }
+MoElement *	   MoRoom::clone()
+{
+	nlohmann::json &data = this->toJson();
+	MoRoom *shp = new MoRoom(data);
+	return shp;
+}
 int		MoRoom::getStartVSeqNo()
 {
 	int _seqNo = -1;

@@ -58,6 +58,39 @@ bool MoDataSource::save(const char* fileName)
 	}
 	return true;
 }
+MoDataSource *MoDataSource::clone()
+{
+	MoDataSource *ds = new MoDataSource();
+
+	std::vector<MoElement*>::iterator itor;
+
+	itor = m_RoomArray.begin();
+	while (itor != m_RoomArray.end()) {
+		MoRoom *shp = dynamic_cast<MoRoom*>((*itor)->clone());
+		if(shp)
+			ds->add(shp);
+
+		itor++;
+	}
+
+	itor = m_DoorArray.begin();
+	while (itor != m_DoorArray.end()) {
+		MoDoor *shp = dynamic_cast<MoDoor*>((*itor)->clone());
+		if (shp)
+			ds->add(shp);
+		itor++;
+	}
+
+	itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end()) {
+		MoVertex *shp = dynamic_cast<MoVertex*>((*itor)->clone());
+		if (shp)
+			ds->add(shp);
+		itor++;
+	}
+
+	return ds;
+}
 bool MoDataSource::readJson(const char* src) 
 {
 	json obj;
@@ -301,27 +334,30 @@ void MoDataSource::add(MoVertex *vertex)
 	if (vertex->getSeqNo() < 0)
 	{
 		vertex->setSeqNo(m_CurrentVertexSeqNo);
-		m_CurrentVertexSeqNo++;
 	}
 	m_VertexArray.push_back(vertex);
+	if (m_CurrentVertexSeqNo <= vertex->getSeqNo())
+		m_CurrentVertexSeqNo = vertex->getSeqNo() + 1;
 }
 void MoDataSource::add(MoRoom *room)
 {
 	if (room->getSeqNo() < 0)
 	{
 		room->setSeqNo(m_CurrentRoomSeqNo);
-		m_CurrentRoomSeqNo++;
 	}
 	m_RoomArray.push_back(room);
+	if (m_CurrentRoomSeqNo <= room->getSeqNo())
+		m_CurrentRoomSeqNo = room->getSeqNo() + 1;
 }
 void MoDataSource::add(MoDoor *door)
 {
 	if (door->getSeqNo() < 0)
 	{
 		door->setSeqNo(m_CurrentShapeSeqNo);
-		m_CurrentShapeSeqNo++;
 	}
 	m_DoorArray.push_back(door);
+	if (m_CurrentShapeSeqNo <= door->getSeqNo())
+		m_CurrentShapeSeqNo = door->getSeqNo()+1;
 }
 //void MoDataSource::add(MoShape *shp) 
 //{

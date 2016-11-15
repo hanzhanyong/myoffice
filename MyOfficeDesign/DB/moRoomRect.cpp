@@ -56,3 +56,9 @@ void			MoRoomRect::setRoomSizeType(RoomSizeType type)
 		break;
 	}
 }
+MoElement *	   MoRoomRect::clone()
+{
+	nlohmann::json &data = this->toJson();
+	MoRoomRect *shp = new MoRoomRect(data);
+	return shp;
+}

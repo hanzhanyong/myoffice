@@ -37,6 +37,7 @@ namespace MyOffice {
 			~MoDoor();
 		public://属性
 			virtual MoElementType	getShapeType() { return MET_DOOR; }
+			virtual MoElement *	    clone();
 
 			float					getWidth();
 			void					setWidth(float w);
