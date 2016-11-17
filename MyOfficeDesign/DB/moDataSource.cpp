@@ -61,14 +61,33 @@ bool MoDataSource::save(const char* fileName)
 MoDataSource *MoDataSource::clone()
 {
 	MoDataSource *ds = new MoDataSource();
+	ds->m_Version = this->m_Version;
+	ds->m_CurrentRoomSeqNo = this->m_CurrentRoomSeqNo;
+	ds->m_CurrentShapeSeqNo = this->m_CurrentShapeSeqNo;
+	ds->m_CurrentVertexSeqNo = this->m_CurrentVertexSeqNo;
 
 	std::vector<MoElement*>::iterator itor;
+
+	itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end()) {
+		MoVertex *shp = dynamic_cast<MoVertex*>((*itor)->clone());
+		if (shp)
+		{
+			ds->add(shp);
+			
+		}
+		itor++;
+	}
 
 	itor = m_RoomArray.begin();
 	while (itor != m_RoomArray.end()) {
 		MoRoom *shp = dynamic_cast<MoRoom*>((*itor)->clone());
-		if(shp)
+		if (shp)
+		{
 			ds->add(shp);
+			shp->setDataSource(ds);
+			shp->init();
+		}
 
 		itor++;
 	}
@@ -77,17 +96,14 @@ MoDataSource *MoDataSource::clone()
 	while (itor != m_DoorArray.end()) {
 		MoDoor *shp = dynamic_cast<MoDoor*>((*itor)->clone());
 		if (shp)
+		{
 			ds->add(shp);
+			shp->setDataSource(ds);
+		}
 		itor++;
 	}
 
-	itor = m_VertexArray.begin();
-	while (itor != m_VertexArray.end()) {
-		MoVertex *shp = dynamic_cast<MoVertex*>((*itor)->clone());
-		if (shp)
-			ds->add(shp);
-		itor++;
-	}
+	
 
 	return ds;
 }
@@ -136,6 +152,7 @@ bool MoDataSource::readJson(const char* src)
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
 		json temp = *it;
 		MoRoom* room = new MoRoom(temp);
+		
 		room->setDataSource(this);
 		room->init();
 		this->add(room);
@@ -236,9 +253,19 @@ std::string MoDataSource::getJson()
 //	m_CurrentVertexSeqNo++;
 //	add(vertex);
 //}
-
+unsigned int MoDataSource::getVertexCount()
+{
+	return m_VertexArray.size();
+}
+MoVertex		*MoDataSource::getVertexIndex(unsigned int index)
+{
+	MoElement *ele = m_VertexArray[index];
+	return dynamic_cast<MoVertex*>(ele);
+}
 MoVertex *   MoDataSource::getVertex(int seqNo)
 {
+	if (seqNo < 0)return NULL;
+
 	int sizeV = m_VertexArray.size();
 	for (int i = 0; i < sizeV; i++)
 	{
@@ -246,6 +273,7 @@ MoVertex *   MoDataSource::getVertex(int seqNo)
 		if (ele->getSeqNo() == seqNo)
 			return dynamic_cast<MoVertex*>(ele);
 	}
+
 	return NULL;
 }
 MoVertex *   MoDataSource::createVertex(float x, float y)
@@ -327,6 +355,12 @@ MoDoor  *MoDataSource::getDoor(int seqNo)
 		if (ele->getSeqNo() == seqNo)
 			return dynamic_cast<MoDoor*>(ele);
 	}
+	return NULL;
+}
+MoDoor		*MoDataSource::getFirstDoor()
+{
+	if (m_DoorArray.size() > 0)
+		return dynamic_cast<MoDoor*>(m_DoorArray[0]);
 	return NULL;
 }
 void MoDataSource::add(MoVertex *vertex)

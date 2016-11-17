@@ -85,15 +85,19 @@ MoVertex			   *MoDoor::alignInfo2Vertex()
 }
 Vec3f		MoDoor::getLocation()
 {
+	Vec3f loc;
 	MoDataSource *dataSource = this->getDataSource();
 	MoVertex *vertex = alignInfo1Vertex();
-	if (vertex == NULL)
-		vertex = alignInfo2Vertex();
-	MoVertex *vertexNext = dataSource->getVertex(vertex->getNextSeqNo());
+	if (vertex)
+	{
+		MoVertex *vertexPre = dataSource->getVertex(vertex->getPreSeqNo());
+		loc = *vertexPre - *vertex;
+		loc.normalize();
+		loc = (*vertex) + loc*(this->getWidth() / 2.0 + alignInfo1()->getX());
+	}
 
-	Vec3f loc = *vertexNext - *vertex;
-	loc.normalize();
-	loc = (*vertex) + loc*(this->getWidth() / 2.0+ alignInfo1()->getX());
+	//	vertex = alignInfo2Vertex();
+	
 	return loc;
 }
 nlohmann::json	&MoDoor::toJson()

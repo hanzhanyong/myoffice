@@ -50,7 +50,7 @@ namespace MyOffice {
 			static void calReceptionRoom(DB::MoDataSource *ds, int num);
 			//2 办公室区域计算
 			static void calOfficeRoom(MoAnalyseResult *result, int num);
-			static void calOfficeRoom(DB::MoDataSource *ds, int num);
+			static void calOfficeRoom(MoAnalyseResult *result, DB::MoDataSource *ds, int num,int type=0);
 			//3 前台、办公室的门口位置
 			static void calDoorOfRoom(MoAnalyseResult *result);
 			static void calDoorOfRoom(DB::MoDataSource *ds);

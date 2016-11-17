@@ -25,6 +25,22 @@ MoElement *	   MoRoom::clone()
 {
 	nlohmann::json &data = this->toJson();
 	MoRoom *shp = new MoRoom(data);
+
+
+	/*MoDataSource *dataSource = shp->getDataSource();
+	std::vector<MoVertex*>::iterator itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end())
+	{
+		MoVertex* vertex = dataSource->getVertex((*itor)->getSeqNo());
+		shp->addVertex(vertex);
+		itor++;
+	}*/
+	/*int sizeLine = getLineCount();
+	for (int i = 0; i < sizeLine; i++)
+	{
+		MoLine *line = m_LineArray[i];
+		shp->m_LineArray.push_back(line);
+	}*/
 	return shp;
 }
 int		MoRoom::getStartVSeqNo()
@@ -39,6 +55,8 @@ void	MoRoom::setStartVSeqNo(int seqNo)
 	if (seqNo == -1&&getVertexCount()>0)
 	{
 		seqNo = m_VertexArray[0]->getSeqNo();
+		//排序
+		this->toJson();
 	}
 	m_DataJson["sttVSeqNo"] = seqNo;
 }
@@ -105,7 +123,7 @@ void	MoRoom::removeVertex(MoVertex *vertex)
 				afterLineNext = m_LineArray[m_LineArray.size()-1];
 			}
 			else
-				afterLineNext = *(--itor);
+				afterLineNext = *(itor-1);
 /*
 			int seqNo = vertex->getNextSeqNo();
 			MoLine *afterLineNext = getLine(seqNo);

@@ -381,6 +381,7 @@ void MoAnalyse::calReceptionRoom(MoDataSource *dataSource, int num)
 			receptionRoom->addVertex(vReceptionRoomNext);
 
 		receptionRoom->setStartVSeqNo(-1);
+
 		dataSource->add(receptionRoom);
 		//设置入户门临靠点信息
 		door->alignInfo1()->setSeqNo(vReceptionRoomNext_Bottom->getSeqNo());

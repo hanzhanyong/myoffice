@@ -51,6 +51,7 @@ namespace MyOffice {
 
 			float			&width() { return m_Width; }  //表示矩形的宽
 			float			&length() { return m_Length; }//表示矩形的长
+
 		private:
 			RoomSizeType    m_RoomSizeType;
 			float			m_Length;

@@ -1,5 +1,5 @@
 ﻿#include "moPolygon.h"
-
+#include "moDataSource.h"
 using namespace MyOffice;
 using namespace MyOffice::DB;
 
@@ -7,6 +7,15 @@ MoElement *	   MoPolygon::clone()
 {
 	nlohmann::json &data = this->toJson();
 	MoPolygon *shp = new MoPolygon(data);
+
+	MoDataSource *dataSource =	shp->getDataSource();
+	std::vector<MoVertex*>::iterator itor = m_VertexArray.begin();
+	while (itor != m_VertexArray.end())
+	{
+		MoVertex* vertex = dataSource->getVertex((*itor)->getSeqNo());
+		shp->addVertex(vertex);
+		itor++;
+	}
 	return shp;
 }
 

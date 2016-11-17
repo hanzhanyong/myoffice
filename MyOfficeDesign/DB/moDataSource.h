@@ -59,16 +59,20 @@ namespace MyOffice {
 
 			MoDataSource *clone();
 
+			unsigned int getVertexCount();
+			MoVertex	*getVertexIndex(unsigned int index);
 			MoVertex *   getVertex(int seqNo);
 			MoVertex *   createVertex(float x,float y);
 
 			unsigned int getRoomCount();
 			MoRoom		*getRoomIndex(unsigned int index);
 			MoDoor		*getDoorOnRoom(MoRoom		*);//获取房间的正门
+			
 
 			MoRoom		*getRoom(int seqNo);
 			MoRoom		*getRoomVertex(int vseqNo);//根据节点获取房间
 			MoDoor		*getDoor(int seqNo);
+			MoDoor		*getFirstDoor();//获取入户门
 
 			virtual void add(MoVertex *vertex);
 			virtual void add(MoRoom *room);
